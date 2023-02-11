@@ -1,0 +1,70 @@
+﻿@using System.Web;
+@model BlogModel
+
+<section class="section no-bottom-padding section social-intro no-bottom-padding">
+    <div class="wrapper">
+
+        <div class="social-icons">
+        </div>
+        <div class="section-intro">
+            <h1 class="title">
+                @Html.PropertyFor(x => x.CurrentPage.Heading)
+            </h1>
+            <p id="ctl00_ctl00_ContentPlaceHolder1_ContentMain_pbyline" class="by-line">
+                <span class="author"> @Html.PropertyFor(x => x.Author.Name)</span><span class="date"></span><span class="author">@Html.PropertyFor(x=>x.CurrentPage.PublishedDate)</span>
+            </p>
+        </div>
+
+    </div>
+</section>
+<div class="section half-padding">
+    <div class="featured-media has-image"><figure><img src="/uploadedImages/McKesson.com/Content/About_McKesson/_BTFBH_Body_Components/_Images/BLOG/BLOG-Why_Drug_Spend_Analytics_Should_Be_at_the_Center_of_Your_Hospital_Pharmacy.jpg" alt="Why Drug Spend Analytics Should Be at the Center of Your Hospital Pharmacy"></figure></div>
+</div>
+<section class="section main-content no-top-padding">
+    <div class="wrapper">
+
+        <div class="content">
+            @Html.Raw(HttpUtility.HtmlDecode(Model.CurrentPage.LongDescription.ToString()))
+        </div>
+        <div class="authors">
+            <div class="author">
+                <header>
+                    <img class="left" src="/uploadedImages/McKesson.com/Content/Blog/_BTFBH_Body_Components/_Images/AUTH/AUTHOR-Yen-Nguyen.jpg" alt="Unable to cast object of type 'System.DBNull' to type 'System.String'.   at McKesson.ImageHelper.getImageDesc(String URL)" title="Yen Nguyen" onerror="this.style.display='none'">
+                </header>
+                <div class="content">
+                    <header class="title"><p>About the author</p></header>
+                    <div class="text">
+                        <p> @Html.PropertyFor(x => x.Author.Name), @Html.PropertyFor(x => x.Author.Descption)</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+@if (Model.ReferenceLinks != null)
+{
+    <section class="section main-content no-top-padding">
+        <div class="wrapper">
+            Related: Learn more about McKesson’s
+            @foreach (var item in Model.ReferenceLinks)
+            {
+                <p><em> <a target="_blank" href="@Url.PageLinkUrl(item)" title="@item.Name">@item.Name</a></em></p>
+            }
+        </div>
+    </section>
+}
+<section class="section main-content no-top-padding">
+    <div class="wrapper">
+        <div class="tags">
+
+            <p>Category:</p>
+            <ul>
+                @foreach (var item in ViewData["Topics"] as Dictionary<int, string>)
+                {
+                    <li><span><a href="/?topic=@item.Key" rel="nofollow" onclick="metaFunction();return true;" title="Business Innovation">@item.Value</a></span></li>
+                }
+            </ul>
+        </div>
+    </div>
+</section>

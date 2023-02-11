@@ -1,0 +1,57 @@
+﻿@model BlogListModel
+
+@foreach (var article in Model.blogs)
+{
+    <article>
+        <main>
+            <header>
+                <h3>
+                    <a target="_blank" href="@Url.PageLinkUrl(article)">
+                        @article.Heading
+                    </a>
+                </h3><div>
+                    <p>
+                        @article.PublishedDate
+                    </p>
+                </div>
+            </header><p class="baParagraph">
+                @article.SubHeading
+            </p>
+            <p>
+
+                @Html.Raw(HttpUtility.HtmlDecode(@article.ShortDescription.ToString()))
+            </p>
+            <a target="_blank" href="@Url.PageLinkUrl(article)" title="Read More"> Read More</a><p></p>
+        </main>
+    </article>
+}
+<div id='divPagination' />
+@if (Model.Pagination.Count > 0)
+{
+    <div class="pagination">
+        <div class="pager">
+            <ul class="cl">
+                <li class="disabled prev first">
+                    <a style="cursor:default"><span>Previous</span></a>
+                </li>
+                @for (int i = 0; i < Model.Pagination.Count; i++)
+                {
+                    var j = i + 1;
+                    if (Model.Pagination.SelectedPage == j)
+                    {
+
+                        <li class="current"><a href="#" onclick="goToPage(@Model.Pagination.Count, @j);" class="CTAExternal"><span>@j</span></a></li>
+                    }
+                    else
+                    {
+                        <li><a href="#" onclick="goToPage(@Model.Pagination.Count, @j);" class="CTAExternal"><span>@j</span></a></li>
+                    }
+
+                }
+                <li class="next last">
+                    <a href="#" onclick="goToPage(@Model.Pagination.Count, @Model.Pagination.Count);" class="CTAExternal"><span>Next</span></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+}

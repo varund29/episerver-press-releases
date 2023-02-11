@@ -1,0 +1,51 @@
+@using EPiServer.Framework.Web.Mvc.Html;
+@using PressReleases.Core.Helpers;
+
+@model IPageViewModel<SitePageData>
+
+
+<!DOCTYPE html>
+<html lang="@(Model.CurrentPage.Language)">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=10" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@Model.CurrentPage.MetaTitle</title>
+    @if (Model.CurrentPage.MetaKeywords != null && Model.CurrentPage.MetaKeywords.Count > 0)
+    {
+        <meta name="keywords" content="@string.Join(",", Model.CurrentPage.MetaKeywords)" />
+    }
+    @if (!string.IsNullOrWhiteSpace(Model.CurrentPage.MetaDescription))
+    {
+        <meta name="description" content="@Model.CurrentPage.MetaDescription" />
+    }
+    @Html.CanonicalLink()
+    @Html.AlternateLinks()
+    <link rel="stylesheet" href="~/css/main.min.css" />
+    <script src="~/js/jquery-3.6.3.min.js"></script>
+    @Html.RequiredClientResources("header")
+</head>
+
+<body>
+    <div class="st-container">
+        <div class="st-pusher">
+            <div class="st-content">
+                <div class="st-content-inner">
+                    <div class="main clearfix">
+                        @await Html.RenderEPiServerQuickNavigatorAsync()
+
+                        @Html.FullRefreshPropertiesMetaData()
+                        @{
+                            await Html.RenderPartialAsync("header");
+                        }
+                        @RenderBody()
+                        @{
+                            await Html.RenderPartialAsync("footer");
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

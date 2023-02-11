@@ -1,0 +1,227 @@
+﻿@model PressreleasesModel
+
+<section class="section no-bottom-padding">
+    <div class="wrapper">
+
+        <div class="section-intro">
+
+            <h1 class="title" itemprop="headline">
+                <div id="divTitleText">
+                    @Html.PropertyFor(x => x.CurrentPage.Heading)
+                </div>
+            </h1>
+            <h2 class="description">  @Html.PropertyFor(x => x.CurrentPage.Descption)</h2>
+        </div>
+
+    </div>
+</section>
+
+<section class="section listing feed">
+    <div class="wrapper">
+
+        <div class="listing-wrapper has-filters">
+            <aside class="filter-container">
+                <div class="filter-sets">
+                    <div class="filter-set">
+                        <h5>
+                            <span>
+                                Refine Results
+                            </span>
+                            <span style="background-color: skyblue;color: #fff; padding: 10px;cursor:pointer" class="reset" onclick="ResetFilters();">RESET</span>
+                        </h5>
+                        <div class="filters dropdowns">
+                            <ul>
+
+                                <li>
+                                    <label id="lblTopic" for="ddlFilterTopic">Filter by Topics</label>
+                                    <select name="ddlFilterTopic" id="ddlFilterTopic" class="pretty-select select2-hidden-accessible" tabindex="-1" aria-hidden="true">
+                                        <option value="0">Filter by Topics</option>
+                                        @foreach (var item in ViewData["Topics"] as Dictionary<int, string>)
+                                        {
+                                            <option value="@item.Key">@item.Value</option>
+                                        }
+
+                                    </select><span class="select2 select2-container select2-container--default" dir="ltr" style="width: 300px;">
+                                        <span class="selection">
+                                            <span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-ddlFilterTopic-container">
+                                                <span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span>
+                                            </span>
+                                        </span>
+                                        <span class="dropdown-wrapper" aria-hidden="true"></span>
+                                    </span>
+                                </li>
+                                <li>
+                                    <label id="lblAuthor" for="ddlFilterAuthor"><span itemprop="author">Filter by Author</span></label>
+                                    <select name="ddlFilterAuthor" id="ddlFilterAuthor" class="pretty-select select2-hidden-accessible" tabindex="-1" aria-hidden="true">
+                                        <option value="0">Filter by Author</option>
+                                        @foreach (var item in ViewData["Authors"] as Dictionary<int, string>)
+                                        {
+                                            <option value="@item.Key">@item.Value</option>
+                                        }
+
+                                    </select><span class="select2 select2-container select2-container--default" dir="ltr" style="width: 300px;">
+                                        <span class="selection">
+                                            <span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-ddlFilterAuthor-container">
+                                                <span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span>
+                                            </span>
+                                        </span>
+                                        <span class="dropdown-wrapper" aria-hidden="true"></span>
+                                    </span>
+                                </li>
+                                <li>
+                                    <label for="ddlFilterSegment"><span id="ddlFilterSegment_1" itemprop="segment">Filter by Segments</span></label>
+                                    <select name="ddlFilterSegment" id="ddlFilterSegment" class="pretty-select select2-hidden-accessible" tabindex="-1" aria-hidden="true">
+                                        <option value="0">Filter by Segments</option>
+                                        @foreach (var item in ViewData["Segments"] as Dictionary<int, string>)
+                                        {
+                                            <option value="@item.Key">@item.Value</option>
+                                        }
+                                    </select><span class="select2 select2-container select2-container--default" dir="ltr" style="width: 300px;">
+                                        <span class="selection">
+                                            <span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-ddlFilterSegment-container">
+                                                <span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span>
+                                            </span>
+                                        </span><span class="dropdown-wrapper" aria-hidden="true">
+                                        </span>
+                                    </span>
+                                </li>
+                                <li>
+                                    <label for="ddlFilterTaxonomy"></label>
+
+                                </li>
+                            </ul>
+                            <span class="reset" onclick="ResetFilters();">RESET</span>
+                            <p class="rss"><a href="rss.aspx" id="subscribe" title="Subscribe to this result set" class="CTAExternal"><span itemprop="subscribe">Subscribe to this result set</span></a></p>
+                        </div>
+
+                        <hr>
+                    </div>
+                </div>
+
+            </aside>
+            <main class="feed-container">
+                <img id="imgProgressBar" title="Loading..." src="~/img/loader.gif" alt="Loading..." style="display: none;" />
+                <div id="blogList">
+                </div>
+            </main>
+        </div>
+        <div id="divPagination">
+            @* <div class="pagination">
+            <div class="pager">
+            <ul class="cl">
+            <li class="disabled prev first"><a style="cursor:default"><span>Previous</span></a></li>
+            <li class="current"><a href="#" class="CTAExternal"><span>1</span></a></li>
+            <li><a href="#" onclick="goToPage(10, 2);" class="CTAExternal"><span>2</span></a></li>
+            <li><a href="#" onclick="goToPage(10, 3);" class="CTAExternal"><span>3</span></a></li>
+            <li><a href="#" onclick="goToPage(10, 4);" class="CTAExternal"><span>4</span></a></li>
+            <li><a href="#" onclick="goToPage(10, 5);" class="CTAExternal"><span>5</span></a></li>
+            <li class="next last"><a href="#" onclick="goToPage(10, 2);" class="CTAExternal"><span>Next</span></a></li>
+            </ul>
+            </div>
+            </div>*@
+        </div>
+    </div>
+</section>
+@*<button onclick="getBlogs(2)">ff</button>*@
+@Html.GetKeyValueEntry("ReadMore");
+<input type="hidden" id="GetBlogs" value="@Model.CurrentPage.Root.ID" />
+<input type="hidden" id="hdnPageSize" value="3">
+<script>
+    let pageId = $("#GetBlogs").val();
+    let topic = 0;
+    let segment = 0;
+    let author = 0;
+    let page = 1;
+    let pagesCount = 0;
+    let pageSize = $("#hdnPageSize").val();
+    try {
+        topic = getParameterByName("topic") || 0;
+        topic.length > 0 && $("#ddlFilterTopic").val(topic);
+    } catch (err) { }
+    try {
+        author = getParameterByName("author") || 0;
+        author.length > 0 && $("#ddlFilterAuthor").val(author);
+    } catch (err) { }
+    try {
+        segment = getParameterByName("segment") || 0;
+        segment.length > 0 && $("#ddlFilterSegment").val(segment);
+    } catch (err) { }
+    try {
+        page = getParameterByName("page") || 1;
+    } catch (err) { }
+
+    getBlogs();
+    $("#ddlFilterTopic").on('change', function () {
+        topic = parseInt($(this).val()) || 0;
+        page = 1;
+        getBlogs();
+    });
+    $("#ddlFilterAuthor").on('change', function () {
+        author = parseInt($(this).val()) || 0;
+        page = 1;
+        getBlogs();
+    });
+    $("#ddlFilterSegment").on('change', function () {
+        segment = parseInt($(this).val()) || 0;
+        page = 1;
+        getBlogs();
+    });
+    function goToPage(ps, p) {
+        page = p;
+        getBlogs();
+    }
+    function getBlogs() {
+        $("#blogList").html("");
+        $("#divPagination").html("");
+        $.ajax({
+            type: "GET",
+            url: "en/GetBlogs?pageId=" + pageId + "&topic=" + topic + "&segment=" + segment + "&author=" + author + "&page=" + page + "&pageSize=" + pageSize,
+            success: function (data) {
+                let html = '';
+                $("#imgProgressBar").hide();
+                let splitText = data.split("<div id='divPagination'/>");
+                $("#blogList").html(splitText[0]);
+                $("#divPagination").html(splitText[1])
+                //var object = $('<div/>').html(data);
+                //object.find("article").each(function () {
+                //    var article = document.createElement('article');
+                //    $(article).html($(this).html());
+                //    $("#blogList").append($(article));
+                //});
+
+                //var p = document.createElement('div');
+                //$(p).addClass("pagination");
+                //$(p).html(object.find('.pagination').html());
+                //$("#divPagination").append($(p));
+                SetPushState({ topic: topic, segment: segment, author: author, page: page });
+            },
+            error: function () { alert('Failed'); }
+        });
+    }
+    function SetPushState(parameters) {
+        console.log(parameters)
+        var querystring = "";
+        for (var key in parameters) parameters.hasOwnProperty(key) && 0 !== parameters[key] && (querystring += ("" === querystring ? "?" : "&") + key + "=" + parameters[key]);
+        "" !== querystring && history.pushState("", "", querystring);
+    }
+    function ResetFilters() {
+        if ($("#blogList").length > 0) {
+            topic = 0;
+            segment = 0;
+            author = 0;
+            page = 1;
+            $("#ddlFilterTopic").val(0);
+            $("#ddlFilterAuthor").val(0);
+            $("#ddlFilterSegment").val(0);
+            SetPushState("");
+            getBlogs();
+        }
+    }
+    function getParameterByName(name) {
+        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+        var regexS = "[\\?&]" + name + "=([^&#]*)",
+            regex = new RegExp(regexS),
+            results = regex.exec(window.location.search);
+        return null == results ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
+</script>
